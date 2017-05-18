@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mutual_fund_config_settings_view" model="ir.ui.view">
+        <field name="name">Mutual Fund Config Settings</field>
+        <field name="model">mutual.fund.config.settings</field>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <form class="oe_form_configuration">
+                <header>
+                    <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                    <button string="Cancel" type="object" name="cancel" class="oe_link"/>
+                </header>
+                <group string="Mutual Fund Config Settings" name="mutual_fund_config_settings">
+                    <field name="mashape_key"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="mutual_fund_config_settings_action" model="ir.actions.act_window">
+        <field name="name">Mutual Fund Config Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mutual.fund.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+    </record>
+
+    <menuitem id="menu_mutual_fund_config_settings" name="Settings" parent="mutual_fund.menu_mutual_fund" sequence="1000" action="mutual_fund_config_settings_action"/>
+</odoo>

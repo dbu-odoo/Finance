@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="loan_view_tree" model="ir.ui.view">
+        <field name="name">loan.loan.tree</field>
+        <field name="model">loan.loan</field>
+        <field name="arch" type="xml">
+            <tree string="Loan">
+                <field name="name"/>
+                <field name="product"/>
+                <field name="start_date"/>
+                <field name="duration"/>
+                <field name="maturity_date"/>
+                <field name="amount"/>
+                <field name="interest_rate"/>
+                <field name="emi"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="loan_view_form" model="ir.ui.view">
+        <field name="name">loan.loan.form</field>
+        <field name="model">loan.loan</field>
+        <field name="arch" type="xml">
+            <form string="Loan">
+                <header>
+                    <field name="installment_button_click" invisible="1"/>
+                    <button name="calculate_installments" type="object" string="Calculate Installments" icon="fa-rupee" attrs="{'invisible': [('installment_button_click', '=', True)]}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options='{"terminology": "active"}'/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" class="oe_inline"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="product"/>
+                            <field name="start_date"/>
+                            <field name="duration"/>
+                            <field name="maturity_date"/>
+                        </group>
+                        <group>
+                            <field name="amount"/>
+                            <field name="interest_rate"/>
+                            <field name="emi"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Installments">
+                            <field name="loan_installments_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name='line_no'/>
+                                    <field name="installment_date"/>
+                                    <field name="installment_amount"/>
+                                    <field name="paid"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right" colspan="2">
+                                <field name="total_amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                <field name="total_paid_amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="remaining_amount"/>
+                                    <button name="button_reset_balance_total" string="(update)" type="object" class="oe_edit_only oe_link"/>
+                                </div>
+                                <field name="remaining_amount" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="loan_view_search" model="ir.ui.view">
+        <field name="name">loan.loan.search</field>
+        <field name="model">loan.loan</field>
+        <field name="arch" type="xml">
+            <search string="Loan">
+                <filter string="Active" domain="[('active', '=', True)]" help="Active"/>
+                <filter string="Inactive" domain="[('active', '=', False)]" help="Inactive"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="loan_action" model="ir.actions.act_window">
+        <field name="name">Loan</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">loan.loan</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Loan"
+        parent="menu_finance"
+        sequence="2"
+        id="submenu_loan"
+        action="loan_action"/>
+</odoo>

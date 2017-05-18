@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fixed_deposite,access_fixed_deposite,model_fixed_deposite,,1,0,0,0
+access_bank_account,access_bank_account,model_bank_account,,1,0,0,0
+access_loan_loan,access_loan_loan,model_loan_loan,,1,0,0,0
+access_loan_installments,access_loan_installments,model_loan_installments,,1,0,0,0

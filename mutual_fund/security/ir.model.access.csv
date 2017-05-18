@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sip_sip,access_sip_sip,model_sip_sip,,1,0,0,0
+access_sip_lines,access_sip_lines,model_sip_lines,,1,0,0,0
+access_lumpsum_lumpsum,access_lumpsum_lumpsum,model_lumpsum_lumpsum,,1,0,0,0
+access_mutual_fund,access_mutual_fund,model_mutual_fund,,1,0,0,0

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="fixed_deposite_view_tree" model="ir.ui.view">
+        <field name="name">fixed.deposite.tree</field>
+        <field name="model">fixed.deposite</field>
+        <field name="arch" type="xml">
+            <tree string="Fixed Deposite">
+                <field name="name"/>
+                <field name="duration"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="bank_account"/>
+                <field name="interest_rate"/>
+                <field name="amount" sum="Total Amount"/>
+                <field name="maturity_amount" sum="Total Maturity Amount"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="fixed_deposite_view_form" model="ir.ui.view">
+        <field name="name">fixed.deposite.form</field>
+        <field name="model">fixed.deposite</field>
+        <field name="arch" type="xml">
+            <form string="Fixed Deposite">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options='{"terminology": "active"}'/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" class="oe_inline"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="duration"/>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group>
+                            <field name="bank_account"/>
+                            <field name="interest_rate"/>
+                            <field name="amount"/>
+                            <field name="maturity_amount"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="fixed_deposite_view_search" model="ir.ui.view">
+        <field name="name">fixed.deposite.search</field>
+        <field name="model">fixed.deposite</field>
+        <field name="arch" type="xml">
+            <search string="Fixed Deposite">
+                <filter string="Active" domain="[('active', '=', True)]" help="Active"/>
+                <filter string="Inactive" domain="[('active', '=', False)]" help="Inactive"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="fixed_deposite_action" model="ir.actions.act_window">
+        <field name="name">Fixed Deposite</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">fixed.deposite</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Fixed Deposite"
+        parent="menu_finance"
+        sequence="1"
+        id="submenu_fixed_deposite"
+        action="fixed_deposite_action"/>
+</odoo>

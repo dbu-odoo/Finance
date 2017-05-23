@@ -16,7 +16,7 @@ class FixedDeposite(models.Model):
     interest_rate = fields.Float(string='Interest Rate', required=True)
     amount = fields.Float(required=True)
     maturity_amount = fields.Float(string="Matured Amount", required=True)
-    active = fields.Boolean(defaut=True)
+    active = fields.Boolean(default=True)
 
     @api.depends('duration', 'date_from')
     def compute_date_to(self):

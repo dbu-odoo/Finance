@@ -1,3 +1,7 @@
 .o_list_number {
 	text-align: left !important;
 }
+
+.o_application_switcher {
+    background-image: url(/mutual_fund/static/description/bg.jpg) !important;
+}

@@ -1,10 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <menuitem name="Expenses" id="menu_expense_expense" sequence="2" web_icon='daily_expense,static/description/icon.png'/>
+
+    <record id="daily_expense_view_tree" model="ir.ui.view">
+        <field name="name">daily.expense.tree</field>
+        <field name="model">daily.expense</field>
+        <field name="arch" type="xml">
+            <tree string="Daily Expense" editable="bottom">
+                <field name="date"/>
+                <field name="name"/>
+                <field name="expense_category"/>
+                <field name="amount" sum="Total Amount"/>
+                <field name="mode"/>
+                <field name="bank" attrs="{'readonly': [('mode', '=', 'offline')], 'required': [('mode', '=', 'online')]}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="daily_expense_action" model="ir.actions.act_window">
+        <field name="name">Daily Expenses</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">daily.expense</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem name="Daily Expenses"
+        parent="menu_expense_expense"
+        sequence="2"
+        id="submenu_daily_expense"
+        action="daily_expense_action"/>
+
     <record id="expense_expense_view_tree" model="ir.ui.view">
         <field name="name">expense.expense.tree</field>
         <field name="model">expense.expense</field>
         <field name="arch" type="xml">
             <tree string="Expenses">
+                <field name='year'/>
                 <field name="month"/>
                 <field name="amount_total"/>
             </tree>
@@ -17,8 +49,9 @@
         <field name="arch" type="xml">
             <form string="Expenses">
                 <sheet>
-                    <div class="oe_title">
+                    <div class="oe_title oe_inline">
                         <h1>
+                            <field name="year" class="oe_inline"/> - 
                             <field name="month" class="oe_inline" placeholder="Month"/>
                         </h1>
                     </div>
@@ -49,8 +82,6 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem name="Expenses" id="menu_expense_expense" sequence="2" web_icon='daily_expense,static/description/icon.png'/>
-
     <menuitem name="Expenses"
         parent="menu_expense_expense"
         sequence="1"
@@ -63,6 +94,7 @@
         <field name="arch" type="xml">
             <tree string="Expense Category" editable='bottom'>
                 <field name="name"/>
+                <field name="amount_total"/>
             </tree>
         </field>
     </record>

@@ -17,6 +17,20 @@
         </field>
     </record>
 
+    <record id="daily_expense_view_search" model="ir.ui.view">
+        <field name="name">daily.expense.search</field>
+        <field name="model">daily.expense</field>
+        <field name="arch" type="xml">
+            <search string="Daily Expense">
+                <field name="date"/>
+                <field name="expense"/>
+                <field name="name"/>
+                <field name="expense_category"/>
+                <field name="mode"/>
+            </search>
+        </field>
+    </record>
+
     <record id="daily_expense_action" model="ir.actions.act_window">
         <field name="name">Daily Expenses</field>
         <field name="type">ir.actions.act_window</field>
@@ -30,6 +44,15 @@
         sequence="2"
         id="submenu_daily_expense"
         action="daily_expense_action"/>
+
+    <record id="daily_expense_action2" model="ir.actions.act_window">
+        <field name="name">Daily Expenses</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">daily.expense</field>
+        <field name="context">{'search_default_expense': active_id}</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record>
 
     <record id="expense_expense_view_tree" model="ir.ui.view">
         <field name="name">expense.expense.tree</field>
@@ -49,28 +72,56 @@
         <field name="arch" type="xml">
             <form string="Expenses">
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" name='%(daily_expense_action2)d' type='action'
+                            string='Expenses' icon='fa-bars'/>
+                    </div>
                     <div class="oe_title oe_inline">
                         <h1>
                             <field name="year" class="oe_inline"/> - 
                             <field name="month" class="oe_inline" placeholder="Month"/>
                         </h1>
                     </div>
-                    <notebook>
-                        <page string='Daily Expense'>
-                            <field name='expense_lines' nolabel='1'>
-                                <tree string="Daily Expense" editable="bottom">
-                                    <field name="date"/>
-                                    <field name="name"/>
-                                    <field name="expense_category"/>
-                                    <field name="amount" sum="Total Amount"/>
-                                    <field name="mode"/>
-                                    <field name="bank" attrs="{'readonly': [('mode', '=', 'offline')], 'required': [('mode', '=', 'online')]}"/>
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
                 </sheet>
             </form>
+        </field>
+    </record>
+
+    <record id="expense_expense_view_kanban" model="ir.ui.view">
+        <field name="name">expense.expense.kanban</field>
+        <field name="model">expense.expense</field>
+        <field name="arch" type="xml">
+            <kanban class="o_event_kanban_view" default_group_by="year">
+                <field name="year"/>
+                <field name="month"/>
+                <field name='currency_id'/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_dropdown_kanban dropdown">
+                                <a class="dropdown-toggle btn" data-toggle="dropdown" href="#" >
+                                    <span class="fa fa-bars fa-lg"/>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <t t-if="widget.deletable">
+                                        <li><a type="delete">Delete</a></li>
+                                    </t>
+                                </ul>
+                            </div>
+                            <div class='row'>
+                                <div class="col-md-4" style="background-color: #875A7B;color: #FFF;margin-top: 5px;">
+                                    <div><h3><field name="year"/></h3></div>
+                                    <div><h4><field name="month"/></h4></div>
+                                </div>
+                                <div class="col-md-4" style='margin-left: 25px;'>
+                                    <div><h3><field name="amount_total" t-options="{'widget': 'monetary', 'display_currency': currency_id}"/></h3></div>
+                                    <div><h3><a name="%(daily_expense_action2)d" type="action">Expenses</a></h3></div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
 
@@ -79,7 +130,7 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">expense.expense</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">kanban</field>
     </record>
 
     <menuitem name="Expenses"

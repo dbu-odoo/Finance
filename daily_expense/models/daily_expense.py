@@ -15,7 +15,8 @@ class Expense(models.Model):
     year = fields.Selection(years, string='Year', required=True)
     month = fields.Char(string='Month', required=True)
     expense_lines = fields.One2many('daily.expense', 'expense', string='Daily Expense')
-    amount_total = fields.Float(compute='comupte_amount_total', string='Amount Total')
+    amount_total = fields.Monetary(compute='comupte_amount_total', string='Amount Total')
+    currency_id = fields.Many2one('res.currency', string='Currency', required=True, default=lambda self: self.env.user.company_id.currency_id)
 
     @api.depends('expense_lines.amount')
     def comupte_amount_total(self):

@@ -109,9 +109,8 @@
                                 </ul>
                             </div>
                             <div class='row'>
-                                <div class="col-md-4" style="background-color: #875A7B;color: #FFF;margin-top: 5px;">
-                                    <div><h3><field name="year"/></h3></div>
-                                    <div><h4><field name="month"/></h4></div>
+                                <div class="col-md-5" style="background-color: #875A7B;color: #FFF;margin-top: 12px;">
+                                    <div style="margin-top: -13px;"><h2 style="text-align: center; margin-bottom: 15px; padding-top: 10px;"><field name="month"/></h2></div>
                                 </div>
                                 <div class="col-md-4" style='margin-left: 25px;'>
                                     <div><h3><field name="amount_total" t-options="{'widget': 'monetary', 'display_currency': currency_id}"/></h3></div>
@@ -130,7 +129,7 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">expense.expense</field>
         <field name="view_type">form</field>
-        <field name="view_mode">kanban</field>
+        <field name="view_mode">kanban,form,tree</field>
     </record>
 
     <menuitem name="Expenses"

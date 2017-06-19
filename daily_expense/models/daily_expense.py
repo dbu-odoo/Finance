@@ -36,6 +36,7 @@ class Expense(models.Model):
 
 class DailyExpense(models.Model):
     _name = 'daily.expense'
+    _order = 'date'
 
     name = fields.Char(required=True)
     expense_category = fields.Many2one('expense.category', string="Expense Category", required=True)

@@ -8,11 +8,11 @@
         <field name="arch" type="xml">
             <tree string="Daily Expense" editable="bottom">
                 <field name="date"/>
-                <field name="name"/>
                 <field name="expense_category"/>
                 <field name="amount" sum="Total Amount"/>
                 <field name="mode"/>
                 <field name="bank" attrs="{'readonly': [('mode', '=', 'offline')], 'required': [('mode', '=', 'online')]}"/>
+                <field name="note"/>
             </tree>
         </field>
     </record>
@@ -24,9 +24,10 @@
             <search string="Daily Expense">
                 <field name="date"/>
                 <field name="expense"/>
-                <field name="name"/>
                 <field name="expense_category"/>
                 <field name="mode"/>
+                <field name="note"/>
+                <filter string="Month" context="{'group_by':'create_date:month'}" name="date"/>
             </search>
         </field>
     </record>
@@ -144,7 +145,6 @@
         <field name="arch" type="xml">
             <tree string="Expense Category" editable='bottom'>
                 <field name="name"/>
-                <field name="amount_total"/>
             </tree>
         </field>
     </record>

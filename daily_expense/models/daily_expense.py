@@ -36,14 +36,15 @@ class Expense(models.Model):
 
 class DailyExpense(models.Model):
     _name = 'daily.expense'
+    _rec_name = 'expense_category'
     _order = 'date'
 
-    name = fields.Char(required=True)
     expense_category = fields.Many2one('expense.category', string="Expense Category", required=True)
     date = fields.Date(required=True, default=fields.Date.context_today)
     amount = fields.Float(required=True)
     mode = fields.Selection([('offline', 'Offline'), ('online', 'Online')], string="Mode", required=True, default='offline')
     bank = fields.Many2one('bank.account')
+    note = fields.Char()
     expense = fields.Many2one('expense.expense', string='Expense')
 
 
@@ -51,10 +52,3 @@ class ExpenseCategory(models.Model):
     _name = 'expense.category'
 
     name = fields.Char(required=True)
-    amount_total = fields.Float(compute='compute_amount_total', string='Amount Total')
-
-    @api.multi
-    def compute_amount_total(self):
-        for rec in self:
-            expenses = self.env['daily.expense'].search([('expense_category', '=', rec.id)])
-            rec.amount_total = sum(expenses.mapped('amount'))

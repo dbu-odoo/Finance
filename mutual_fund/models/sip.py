@@ -6,6 +6,7 @@ class SIP(models.Model):
     _name = 'sip.sip'
 
     name = fields.Many2one('mutual.fund', required=True)
+    user_id = fields.Many2one('res.users', string="User", default=lambda self: self.env.user)
     amount = fields.Float(required=True)
     total_investment = fields.Float(compute='compute_amount', string='Total Investment')
     current_value = fields.Float(compute='compute_amount', string='Current Value')
@@ -35,6 +36,7 @@ class SIPLines(models.Model):
     _name = 'sip.lines'
 
     sip_id = fields.Many2one('sip.sip', string='SIP')
+    user_id = fields.Many2one('res.users', string="User", default=lambda self: self.env.user)
     line_no = fields.Integer(compute='_get_line_numbers', string='No',readonly=True, default=False)
     mutual_fund = fields.Many2one('mutual.fund', related='sip_id.name', required=True)
     date = fields.Date(string="Date", required=True)

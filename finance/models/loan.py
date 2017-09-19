@@ -10,6 +10,7 @@ class Loan(models.Model):
     _description = 'Loan'
 
     name = fields.Char(string="Loan Name", required=True)
+    user_id = fields.Many2one('res.users', string="User", default=lambda self: self.env.user)
     product = fields.Many2one('product.product', string="Product", required="True")
     start_date = fields.Date(string="Start Date", required=True)
     duration = fields.Integer(string="Duration(Month)", required=True)
@@ -78,6 +79,7 @@ class LoanInstallments(models.Model):
     _description = 'Loan Installments'
 
     installment_date = fields.Date(string="Installment Date", required=True)
+    user_id = fields.Many2one('res.users', string="User", default=lambda self: self.env.user)
     installment_amount = fields.Float(string="Installment Amount", required=True)
     paid = fields.Boolean(string="Paid")
     loan_id =fields.Many2one('loan.loan', string="Loan", ondelete='cascade')

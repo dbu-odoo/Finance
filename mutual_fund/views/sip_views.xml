@@ -81,6 +81,16 @@
         <field name="res_model">sip.sip</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
+        <field name="domain">[('user_id','=',uid)]</field>
+    </record>
+
+    <record id="sip_lines_action" model="ir.actions.act_window">
+        <field name="name">SIP Lines</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sip.lines</field>
+        <field name="view_type">tree</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[('user_id','=',uid)]</field>
     </record>
 
     <menuitem name="SIP"

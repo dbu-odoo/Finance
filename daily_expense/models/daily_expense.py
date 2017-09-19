@@ -17,6 +17,7 @@ class Expense(models.Model):
     expense_lines = fields.One2many('daily.expense', 'expense', string='Daily Expense')
     amount_total = fields.Monetary(compute='comupte_amount_total', string='Amount Total')
     currency_id = fields.Many2one('res.currency', string='Currency', required=True, default=lambda self: self.env.user.company_id.currency_id)
+    user_id = fields.Many2one('res.users', string="User", default=lambda self: self.env.user)
 
     @api.depends('expense_lines.amount')
     def comupte_amount_total(self):
@@ -40,6 +41,7 @@ class DailyExpense(models.Model):
     _order = 'date'
 
     expense_category = fields.Many2one('expense.category', string="Expense Category", required=True)
+    user_id = fields.Many2one('res.users', string="User", default=lambda self: self.env.user)
     date = fields.Date(required=True, default=fields.Date.context_today)
     amount = fields.Float(required=True)
     mode = fields.Selection([('offline', 'Offline'), ('online', 'Online')], string="Mode", required=True, default='offline')

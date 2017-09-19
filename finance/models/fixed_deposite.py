@@ -9,6 +9,7 @@ class FixedDeposite(models.Model):
     _name = 'fixed.deposite'
 
     name = fields.Char(required=True)
+    user_id = fields.Many2one('res.users', string="User", default=lambda self: self.env.user)
     duration = fields.Integer(string="Duration (Days)", required=True)
     date_from = fields.Date(string="Start Date", required=True, default=fields.Date.context_today)
     date_to = fields.Date(compute="compute_date_to", string="Maturity Date", readonly=True)

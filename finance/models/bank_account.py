@@ -6,6 +6,7 @@ class BankAccount(models.Model):
     _name = 'bank.account'
 
     name = fields.Char(string="Bank Name", required=True)
+    user_id = fields.Many2one('res.users', string="User", default=lambda self: self.env.user)
     beneficiary_name = fields.Char(string="Beneficiary Name", required=True)
     account_number = fields.Char(string='Account Number', required=True)
     branch_name = fields.Char(string="Branch Name", required=True)

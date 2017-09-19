@@ -48,6 +48,7 @@
         <field name="res_model">bank.account</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
+        <field name="domain">[('user_id','=',uid)]</field>
     </record>
 
     <menuitem name="Bank Account"

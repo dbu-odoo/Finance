@@ -7,6 +7,7 @@ class Lumpsum(models.Model):
     _rec_name = 'mutual_fund'
 
     mutual_fund = fields.Many2one('mutual.fund', required=True)
+    user_id = fields.Many2one('res.users', string="User", default=lambda self: self.env.user)
     date = fields.Date(string="Date", required=True)
     amount = fields.Float(required=True, digits=(16, 2))
     nav = fields.Float(string="NAV", required=True, digits=(16, 4))

@@ -4,4 +4,5 @@
 
 .o_application_switcher {
     background-image: url(/mutual_fund/static/description/bg.jpg) !important;
+    background: -webkit-gradient(linear);
 }

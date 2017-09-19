@@ -20,7 +20,7 @@
     </record>
 
     <record id="lumpsum_view_form" model="ir.ui.view">
-        <field name="name">lumpsum.v.form</field>
+        <field name="name">lumpsum.lumpsum.form</field>
         <field name="model">lumpsum.lumpsum</field>
         <field name="arch" type="xml">
             <form string="Lumpsum">
@@ -70,6 +70,7 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">lumpsum.lumpsum</field>
         <field name="view_type">form</field>
+        <field name="domain">[('user_id','=',uid)]</field>
         <field name="view_mode">tree,form</field>
     </record>
 

@@ -94,6 +94,16 @@
         <field name="res_model">loan.loan</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
+        <field name="domain">[('user_id','=',uid)]</field>
+    </record>
+
+    <record id="loan_installments_action" model="ir.actions.act_window">
+        <field name="name">Loan Installments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">loan.installments</field>
+        <field name="view_type">tree</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[('user_id','=',uid)]</field>
     </record>
 
     <menuitem name="Loan"

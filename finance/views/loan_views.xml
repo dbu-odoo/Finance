@@ -8,11 +8,14 @@
                 <field name="name"/>
                 <field name="product"/>
                 <field name="start_date"/>
+                <field name="maturity_date" string="End Date"/>
                 <field name="duration"/>
-                <field name="maturity_date"/>
-                <field name="amount"/>
+                <field name="remaining_duration" string="Remain EMI"/>
                 <field name="interest_rate"/>
                 <field name="emi"/>
+                <field name="amount"/>
+                <field name="total_paid_amount"/>
+                <field name="remaining_amount"/>
             </tree>
         </field>
     </record>

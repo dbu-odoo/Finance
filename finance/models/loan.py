@@ -14,6 +14,7 @@ class Loan(models.Model):
     product = fields.Many2one('product.product', string="Product", required="True")
     start_date = fields.Date(string="Start Date", required=True)
     duration = fields.Integer(string="Duration(Month)", required=True)
+    remaining_duration = fields.Integer(compute="compute_remaining_duration", string="Remaining Duration")
     amount = fields.Float(string="Loan Amount", required=True)
     interest_rate = fields.Float(string="Interest Rate")
     emi = fields.Float(compute="compute_emi", string="EMI")
@@ -25,6 +26,12 @@ class Loan(models.Model):
     total_amount = fields.Float(compute="compute_amount", string="Loan Amount", readonly=True)
     total_paid_amount = fields.Float(compute="compute_amount", string="Paid Amount", readonly=True)
     remaining_amount = fields.Float(compute="compute_amount", string="Remaining Amount", readonly=True)
+
+    @api.depends('duration', 'loan_installments_ids.paid')
+    def compute_remaining_duration(self):
+        for rec in self:
+            if rec.duration:
+                rec.remaining_duration = rec.duration - int(len(rec.loan_installments_ids.filtered(lambda b: b.paid == True)))
 
     @api.depends('start_date', 'duration')
     def compute_maturity_date(self):

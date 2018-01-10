@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- <template id="assets_backend" name="mutual_fund assets" inherit_id="web.assets_backend">
-        <xpath expr="." position="inside">
-            <link rel="stylesheet" href="/mutual_fund/static/src/css/mutual_fund.css"/>
-        </xpath>
-    </template> -->
-
     <record id="mutual_fund_view_tree" model="ir.ui.view">
         <field name="name">mutual.fund.tree</field>
         <field name="model">mutual.fund</field>

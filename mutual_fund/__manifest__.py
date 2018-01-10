@@ -4,15 +4,15 @@
     'version': '1.0',
     'category': 'Finance',
     'sequence': 1,
+    'license': 'LGPL-3',
     'summary': 'Manage mutual funds ands SIP',
     'description': """
 Mutual Fund Management
 ==========================
 Get live nav rate of funds.
     """,
-    'author': 'Deep Rajput',
-    'depends': [
-    ],
+    'author': 'Deep Technologies',
+    'depends': ['base_setup'],
     'data': [
         'security/ir.model.access.csv',
         'data/mutual_fund_data.xml',
@@ -22,5 +22,7 @@ Get live nav rate of funds.
         'views/res_config_views.xml',
     ],
     'images': ['static/description/icon.png'],
+    'price': 30.00,
+    'currency': 'EUR',
     'application': True,
 }

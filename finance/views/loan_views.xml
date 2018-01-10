@@ -111,7 +111,7 @@
 
     <menuitem name="Loan"
         parent="menu_finance"
-        sequence="2"
+        sequence="1"
         id="submenu_loan"
         action="loan_action"/>
 </odoo>

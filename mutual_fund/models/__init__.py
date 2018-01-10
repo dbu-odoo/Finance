@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import mutual_fund
-import sip
-import lumpsum
-import res_config
+from . import mutual_fund
+from . import sip
+from . import lumpsum
+from . import res_config

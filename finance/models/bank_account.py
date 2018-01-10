@@ -10,5 +10,4 @@ class BankAccount(models.Model):
     beneficiary_name = fields.Char(string="Beneficiary Name", required=True)
     account_number = fields.Char(string='Account Number', required=True)
     branch_name = fields.Char(string="Branch Name", required=True)
-    branch_code = fields.Char(string="Branch Code", required=True)
     ifsc_code = fields.Char(string="IFSC Code", required=True)

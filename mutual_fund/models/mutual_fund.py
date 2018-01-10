@@ -15,7 +15,7 @@ class Mutualfund(models.Model):
     def fetch_latest_nav(self):
         for mf in self.search([]):
             url = 'https://mutualfundsnav.p.mashape.com/'
-            mashape_key = self.env['ir.config_parameter'].sudo().get_param('mashape_key')
+            mashape_key = self.env['ir.config_parameter'].sudo().get_param('mutual_fund_mashape_key')
             headers = {
                 "X-Mashape-Key": mashape_key,
                 "Content-Type": "application/json",

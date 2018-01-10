@@ -2,17 +2,22 @@
 from odoo import api, fields, models
 
 
-class MutualfundConfiguration(models.TransientModel):
-    _name = 'mutual.fund.config.settings'
+class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     mashape_key = fields.Char(string="Mashape Key")
-
-    @api.multi
-    def set_mashape_key(self):
-        self.env['ir.config_parameter'].set_param('mashape_key', (self.mashape_key or '').strip())
+    module_mutual_fund = fields.Boolean("Mutual Fund")
 
     @api.model
-    def get_default_mashape_key(self, fields):
-        mashape_key = self.env['ir.config_parameter'].get_param('mashape_key', default='')
-        return {'mashape_key': mashape_key}
+    def get_values(self):
+        res = super(ResConfigSettings, self).get_values()
+        get_param = self.env['ir.config_parameter'].sudo().get_param
+        res.update(
+            mashape_key=get_param('mutual_fund_mashape_key', default='')
+        )
+        return res
+
+    def set_values(self):
+        super(ResConfigSettings, self).set_values()
+        set_param = self.env['ir.config_parameter'].set_param
+        set_param('mutual_fund_mashape_key', (self.mashape_key or '').strip())

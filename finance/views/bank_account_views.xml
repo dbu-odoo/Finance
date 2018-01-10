@@ -10,7 +10,6 @@
                 <field name="account_number"/>
                 <field name="ifsc_code"/>
                 <field name="branch_name"/>
-                <field name="branch_code"/>
             </tree>
         </field>
     </record>
@@ -30,11 +29,10 @@
                         <group>
                             <field name="beneficiary_name"/>
                             <field name="account_number"/>
-                            <field name="ifsc_code"/>
                         </group>
                         <group>
+                            <field name="ifsc_code"/>
                             <field name="branch_name"/>
-                            <field name="branch_code"/>
                         </group>
                     </group>
                 </sheet>

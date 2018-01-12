@@ -9,7 +9,7 @@
                 <field name='date'/>
                 <field name='amount' sum='Total Invested Amount'/>
                 <field name='nav'/>
-                <field name='units' sum="Total Units"/>
+                <field name='units'/>
                 <field name='current_nav'/>
                 <field name='current_nav_date'/>
                 <field name='current_value' sum='Total Current Amount'/>
@@ -76,7 +76,7 @@
 
     <menuitem name="Lumpsum"
         parent="mutual_fund.menu_mutual_fund"
-        sequence="20"
+        sequence="10"
         id="submenu_lumpsum"
         action="lumpsum_action"/>
 </odoo>

@@ -95,7 +95,7 @@
 
     <menuitem name="SIP"
         parent="mutual_fund.menu_mutual_fund"
-        sequence="10"
+        sequence="20"
         id="submenu_sip"
         action="sip_action"/>
 </odoo>

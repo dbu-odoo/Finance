@@ -5,6 +5,7 @@ from odoo import api, fields, models
 class Lumpsum(models.Model):
     _name = 'lumpsum.lumpsum'
     _rec_name = 'mutual_fund'
+    _order = 'date desc'
 
     mutual_fund = fields.Many2one('mutual.fund', required=True)
     user_id = fields.Many2one('res.users', string="User", default=lambda self: self.env.user)

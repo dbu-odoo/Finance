@@ -42,7 +42,7 @@
                         </group>
                     </group>
                     <notebook>
-                        <page>
+                        <page string="Installments">
                             <field name='sip_line_ids' nolabel='1'>
                                 <tree editable='bottom'>
                                     <field name='line_no'/>

@@ -20,11 +20,12 @@ class SIP(models.Model):
         for rec in self:
             if rec.sip_line_ids:
                 total_amount = sum(rec.sip_line_ids.mapped('amount'))
-                current_value = sum(rec.sip_line_ids.mapped('current_value'))
-                rec.total_investment = total_amount
-                rec.current_value = current_value
-                rec.profit = current_value - total_amount
-                rec.percentage = ('%.2f' % (((current_value * 100) / total_amount) - 100)) + '%'
+                if total_amount:
+                    current_value = sum(rec.sip_line_ids.mapped('current_value'))
+                    rec.total_investment = total_amount
+                    rec.current_value = current_value
+                    rec.profit = current_value - total_amount
+                    rec.percentage = ('%.2f' % (((current_value * 100) / total_amount) - 100)) + '%'
 
     @api.multi
     def fetch_latest_nav(self):

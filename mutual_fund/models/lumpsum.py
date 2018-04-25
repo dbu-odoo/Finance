@@ -8,6 +8,7 @@ class Lumpsum(models.Model):
     _order = 'date desc'
 
     mutual_fund = fields.Many2one('mutual.fund', required=True)
+    trading_account = fields.Char(string='Trading Account', required=True)
     user_id = fields.Many2one('res.users', string="User", default=lambda self: self.env.user)
     date = fields.Date(string="Date", required=True)
     amount = fields.Float(required=True, digits=(16, 2))

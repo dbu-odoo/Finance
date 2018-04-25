@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
             <tree string="Lumpsum">
                 <field name='mutual_fund'/>
+                <field name="trading_account"/>
                 <field name='date'/>
                 <field name='amount' sum='Total Invested Amount'/>
                 <field name='nav'/>
@@ -36,6 +37,7 @@
                     <group>
                         <group>
                             <field name="mutual_fund"/>
+                            <field name="trading_account"/>
                             <field name="date"/>
                             <field name='amount'/>
                             <field name='nav'/>

@@ -6,6 +6,7 @@ class SIP(models.Model):
     _name = 'sip.sip'
 
     name = fields.Many2one('mutual.fund', required=True)
+    trading_account = fields.Char(string='Trading Account', required=True)
     user_id = fields.Many2one('res.users', string="User", default=lambda self: self.env.user)
     amount = fields.Float(required=True)
     total_investment = fields.Float(compute='compute_amount', string='Total Investment')

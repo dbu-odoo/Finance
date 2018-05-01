@@ -8,9 +8,9 @@
                 <field name="name"/>
                 <field name="trading_account"/>
                 <field name="amount"/>
-                <field name="total_investment"/>
-                <field name="current_value"/>
-                <field name="profit"/>
+                <field name="total_investment" sum='Total Invested Amount'/>
+                <field name="current_value" sum='Total Current Amount'/>
+                <field name="profit" sum='Total Profit/Loss'/>
                 <field name='percentage'/>
             </tree>
         </field>

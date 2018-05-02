@@ -13,9 +13,9 @@
                 <field name="remaining_duration" string="Remain EMI"/>
                 <field name="interest_rate"/>
                 <field name="emi"/>
-                <field name="amount"/>
-                <field name="total_paid_amount"/>
-                <field name="remaining_amount"/>
+                <field name="amount" sum='Total Loan Amount'/>
+                <field name="total_paid_amount" sum='Total Paid Amount'/>
+                <field name="remaining_amount" sum='Total Remaining Amount'/>
             </tree>
         </field>
     </record>
@@ -28,6 +28,7 @@
                 <header>
                     <field name="installment_button_click" invisible="1"/>
                     <button name="calculate_installments" type="object" string="Calculate Installments" icon="fa-rupee" attrs="{'invisible': [('installment_button_click', '=', True)]}"/>
+                    <button name="remove_installments" type="object" string="Remove Installments" icon="fa-trash" attrs="{'invisible': [('installment_button_click', '!=', True)]}"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
@@ -73,6 +74,9 @@
                                 </div>
                                 <field name="remaining_amount" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
                             </group>
+                        </page>
+                        <page string='Note'>
+                            <field name='note' nolabel="1"/>
                         </page>
                     </notebook>
                 </sheet>

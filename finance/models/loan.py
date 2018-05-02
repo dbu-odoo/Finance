@@ -10,22 +10,23 @@ class Loan(models.Model):
     _description = 'Loan'
 
     name = fields.Char(string="Loan Name", required=True)
-    user_id = fields.Many2one('res.users', string="User", default=lambda self: self.env.user)
+    user_id = fields.Many2one('res.users', string="User", default=lambda self: self.env.user, copy=False)
     product = fields.Many2one('product.product', string="Product", required="True")
     start_date = fields.Date(string="Start Date", required=True)
     duration = fields.Integer(string="Duration(Month)", required=True)
-    remaining_duration = fields.Integer(compute="compute_remaining_duration", string="Remaining Duration")
+    remaining_duration = fields.Integer(compute="compute_remaining_duration", string="Remaining Duration", copy=False)
     amount = fields.Float(string="Loan Amount", required=True)
     interest_rate = fields.Float(string="Interest Rate")
     emi = fields.Float(compute="compute_emi", string="EMI")
-    maturity_date = fields.Date(compute="compute_maturity_date", string="Maturity Date", readonly=True)
-    loan_installments_ids = fields.One2many('loan.installments', 'loan_id', string="Loan Installments")
-    installment_button_click = fields.Boolean()
+    maturity_date = fields.Date(compute="compute_maturity_date", string="Maturity Date", readonly=True, copy=False)
+    loan_installments_ids = fields.One2many('loan.installments', 'loan_id', string="Loan Installments", copy=False)
+    installment_button_click = fields.Boolean(copy=False)
     active = fields.Boolean(default=True)
 
     total_amount = fields.Float(compute="compute_amount", string="Loan Amount", readonly=True)
     total_paid_amount = fields.Float(compute="compute_amount", string="Paid Amount", readonly=True)
     remaining_amount = fields.Float(compute="compute_amount", string="Remaining Amount", readonly=True)
+    note = fields.Text(copy=False)
 
     @api.depends('duration', 'loan_installments_ids.paid')
     def compute_remaining_duration(self):
@@ -78,6 +79,14 @@ class Loan(models.Model):
                 counter += 1
                 date = date + relativedelta(months = 1)
             loan.installment_button_click = True
+        return True
+
+    @api.multi
+    def remove_installments(self):
+        for loan in self:
+            loan_installments = self.env['loan.installments']
+            loan_installments.search([('loan_id', '=', loan.id)]).unlink()
+            loan.installment_button_click = False
         return True
 
 

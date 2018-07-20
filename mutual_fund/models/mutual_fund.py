@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-import json
-import http.client
+import requests
+from datetime import datetime
+
 from odoo import api, fields, models
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 
 
 class Mutualfund(models.Model):
@@ -15,19 +17,9 @@ class Mutualfund(models.Model):
     @api.model
     def fetch_latest_nav(self):
         for mf in self.search([]):
-            conn = http.client.HTTPSConnection("mutualfundsnav.p.mashape.com")
-            mashape_key = self.env['ir.config_parameter'].sudo().get_param('mutual_fund_mashape_key')
-            headers = {
-                'x-mashape-key': mashape_key,
-                'content-type': "application/x-www-form-urlencoded",
-                'accept': "application/json",
-            }
-
-            payload = '{"scodes":[%s]}' % mf.amfi_code
-
-            conn.request("POST", "/", payload, headers)
-            res = conn.getresponse()
-            data = res.read().decode("utf-8")
-            if data:
-                mf.current_nav = float(json.loads(data)[0].get('nav'))
-                mf.date = str(json.loads(data)[0].get('date'))
+            res = requests.get('https://www.amfiindia.com/spages/NAVAll.txt')
+            for i in [i.split(';') for i in res.text.strip().split('\n')]:
+                if len(i) == 6:
+                    if mf.amfi_code == i[0].strip():
+                        mf.current_nav = float(i[4].strip())
+                        mf.date = datetime.strptime(i[5].strip(), '%d-%b-%Y').strftime(DF)

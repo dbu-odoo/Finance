@@ -19,7 +19,6 @@ Get live nav rate of funds.
         'views/mutual_fund_views.xml',
         'views/sip_views.xml',
         'views/lumpsum_views.xml',
-        'views/res_config_views.xml',
     ],
     'images': ['static/description/icon.png'],
     'price': 30.00,

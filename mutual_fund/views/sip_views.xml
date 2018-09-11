@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-	<record id="sip_view_tree" model="ir.ui.view">
+    <record id="sip_view_tree" model="ir.ui.view">
         <field name="name">sip.sip.tree</field>
         <field name="model">sip.sip</field>
         <field name="arch" type="xml">
@@ -8,6 +8,8 @@
                 <field name="name"/>
                 <field name="trading_account"/>
                 <field name="amount"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
                 <field name="total_investment" sum='Total Invested Amount'/>
                 <field name="current_value" sum='Total Current Amount'/>
                 <field name="profit" sum='Total Profit/Loss'/>
@@ -35,8 +37,12 @@
                             <field name="name"/>
                             <field name="trading_account"/>
                             <field name="amount"/>
+                            <field name="date_of_installment"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
                         </group>
                         <group>
+                            <field name="total_installments"/>
                             <field name="total_investment"/>
                             <field name="current_value"/>
                             <field name="profit"/>
@@ -50,8 +56,8 @@
                                     <field name='line_no'/>
                                     <field name='date'/>
                                     <field name='amount' sum='Total Invested Amount'/>
-                                    <field name='nav'/>
                                     <field name='units'/>
+                                    <field name='nav'/>
                                     <field name='current_nav'/>
                                     <field name='current_nav_date'/>
                                     <field name='current_value' sum='Total Current Amount'/>
@@ -59,6 +65,10 @@
                                     <field name='percentage'/>
                                 </tree>
                             </field>
+                        </page>
+                        <page string="Note">
+                            <separator string="Note" colspan="4"/>
+                            <field name='note' nolabel="1"/>
                         </page>
                     </notebook>
                 </sheet>

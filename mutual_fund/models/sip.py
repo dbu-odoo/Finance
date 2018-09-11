@@ -12,8 +12,13 @@ class SIP(models.Model):
     total_investment = fields.Float(compute='compute_amount', string='Total Investment')
     current_value = fields.Float(compute='compute_amount', string='Current Value')
     profit = fields.Float(compute='compute_amount', string='Profit/Loss')
+    date_of_installment = fields.Integer(string='Installment Date', required=True)
+    start_date = fields.Date(string='Start Date', required=True)
+    end_date = fields.Date(string='End Date', required=True)
+    total_installments = fields.Integer(string='Total Installments', required=True)
     percentage = fields.Char(compute='compute_amount', string='Percentage', readonly=True)
     sip_line_ids = fields.One2many('sip.lines', 'sip_id', string="SIP Lines")
+    note = fields.Text()
     active = fields.Boolean(default=True)
 
     @api.depends('sip_line_ids')

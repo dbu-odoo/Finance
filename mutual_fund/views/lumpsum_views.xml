@@ -9,8 +9,8 @@
                 <field name="trading_account"/>
                 <field name='date'/>
                 <field name='amount' sum='Total Invested Amount'/>
-                <field name='nav'/>
                 <field name='units'/>
+                <field name='nav'/>
                 <field name='current_nav'/>
                 <field name='current_nav_date'/>
                 <field name='current_value' sum='Total Current Amount'/>

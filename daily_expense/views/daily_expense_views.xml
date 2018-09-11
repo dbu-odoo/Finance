@@ -113,11 +113,11 @@
                             </div>
                             <div class='row'>
                                 <div class="col-md-5">
-                                    <div>
+                                    <div class='col-md-12'>
                                         <h2><field name="month"/></h2>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-7">
                                     <div><h3><field name="amount_total" widget="monetary"/></h3></div>
                                     <div><h3><a name="%(daily_expense_action2)d" type="action" style='font-size: initial;'>Expenses</a></h3></div>
                                 </div>

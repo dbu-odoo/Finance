@@ -52,7 +52,7 @@
                     <notebook>
                         <page string="Installments">
                             <field name='sip_line_ids' nolabel='1'>
-                                <tree editable='bottom'>
+                                <tree editable='bottom' decoration-danger="profit&lt;0" decoration-success="profit&gt;0">
                                     <field name='line_no'/>
                                     <field name='date'/>
                                     <field name='amount' sum='Total Invested Amount'/>

@@ -4,7 +4,7 @@
         <field name="name">sip.sip.tree</field>
         <field name="model">sip.sip</field>
         <field name="arch" type="xml">
-            <tree string="SIP">
+            <tree string="SIP" decoration-danger="profit&lt;0" decoration-success="profit&gt;0">
                 <field name="name"/>
                 <field name="trading_account"/>
                 <field name="amount"/>
@@ -13,7 +13,7 @@
                 <field name="total_investment" sum='Total Invested Amount'/>
                 <field name="current_value" sum='Total Current Amount'/>
                 <field name="profit" sum='Total Profit/Loss'/>
-                <field name='percentage'/>
+                <field name='percentage' avg="Percentage"/>
             </tree>
         </field>
     </record>

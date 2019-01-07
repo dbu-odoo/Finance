@@ -4,7 +4,7 @@
         <field name="name">lumpsum.lumpsum.tree</field>
         <field name="model">lumpsum.lumpsum</field>
         <field name="arch" type="xml">
-            <tree string="Lumpsum">
+            <tree string="Lumpsum" decoration-danger="profit&lt;0" decoration-success="profit&gt;0">
                 <field name='mutual_fund'/>
                 <field name="trading_account"/>
                 <field name='date'/>
@@ -15,7 +15,7 @@
                 <field name='current_nav_date'/>
                 <field name='current_value' sum='Total Current Amount'/>
                 <field name='profit' sum='Total Profit'/>
-                <field name='percentage'/>
+                <field name='percentage' avg="Percentage"/>
             </tree>
         </field>
     </record>

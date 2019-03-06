@@ -8,6 +8,7 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 
 class Mutualfund(models.Model):
     _name = 'mutual.fund'
+    _description = 'Mutual Fund'
 
     name = fields.Char(required=True)
     amfi_code = fields.Char(string="AMFI Code", required=True)

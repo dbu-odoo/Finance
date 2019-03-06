@@ -59,13 +59,13 @@
         </field>
     </record>
 
-    <record id="lumpsum_view_search" model="ir.ui.view">
+    <record id="sip_view_search" model="ir.ui.view">
         <field name="name">lumpsum.lumpsum.search</field>
         <field name="model">lumpsum.lumpsum</field>
         <field name="arch" type="xml">
             <search string="Lumpsum">
-                <filter string="Active" domain="[('active', '=', True)]" help="Active"/>
-                <filter string="Inactive" domain="[('active', '=', False)]" help="Inactive"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Inactive" name="inactive" domain="[('active', '!=', True)]"/>
             </search>
         </field>
     </record>

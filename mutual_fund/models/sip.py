@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
-
 from odoo import api, fields, models
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 
 
 class SIP(models.Model):
     _name = 'sip.sip'
+    _description = 'SIP'
 
     name = fields.Many2one('mutual.fund', required=True)
     trading_account = fields.Char(string='Trading Account', required=True)
@@ -48,6 +46,7 @@ class SIP(models.Model):
 
 class SIPLines(models.Model):
     _name = 'sip.lines'
+    _description = 'SIP Lines'
 
     sip_id = fields.Many2one('sip.sip', string='SIP')
     user_id = fields.Many2one('res.users', string="User", default=lambda self: self.env.user)
@@ -85,7 +84,7 @@ class SIPLines(models.Model):
     def compute_txn_days(self):
         for rec in self:
             if rec.current_nav_date and rec.date:
-                rec.txn_days = (datetime.strptime(rec.current_nav_date, DF) - datetime.strptime(rec.date, DF)).days
+                rec.txn_days = (rec.current_nav_date - rec.date).days
 
     @api.depends('amount', 'nav')
     def compute_units(self):
@@ -110,7 +109,7 @@ class SIPLines(models.Model):
     def compute_cagr(self):
         for rec in self:
             if rec.amount > 0.00 and rec.current_value > 0.00 and rec.date and rec.current_nav_date:
-                days = (datetime.strptime(rec.current_nav_date, DF) - datetime.strptime(rec.date, DF)).days
+                days = (rec.current_nav_date - rec.date).days
                 if days > 0:
                     cagr = (rec.current_value/rec.amount)**(1/(days/365))-1
                     rec.cagr = '{:.2%}'.format(cagr)

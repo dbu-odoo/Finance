@@ -84,8 +84,8 @@
         <field name="model">sip.sip</field>
         <field name="arch" type="xml">
             <search string="SIP">
-                <filter string="Active" domain="[('active', '=', True)]" help="Active"/>
-                <filter string="Inactive" domain="[('active', '=', False)]" help="Inactive"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Inactive" name="inactive" domain="[('active', '!=', True)]"/>
             </search>
         </field>
     </record>

@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
-
 from odoo import api, fields, models
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 
 
 class Lumpsum(models.Model):
     _name = 'lumpsum.lumpsum'
+    _description = 'Lumpsum'
     _rec_name = 'mutual_fund'
     _order = 'date desc'
 
@@ -42,7 +40,7 @@ class Lumpsum(models.Model):
     def compute_txn_days(self):
         for rec in self:
             if rec.current_nav_date and rec.date:
-                rec.txn_days = (datetime.strptime(rec.current_nav_date, DF) - datetime.strptime(rec.date, DF)).days
+                rec.txn_days = (rec.current_nav_date - rec.date).days
 
     @api.depends('amount', 'nav')
     def compute_units(self):
@@ -67,7 +65,7 @@ class Lumpsum(models.Model):
     def compute_cagr(self):
         for rec in self:
             if rec.amount and rec.current_value and rec.date and rec.current_nav_date:
-                days = (datetime.strptime(rec.current_nav_date, DF) - datetime.strptime(rec.date, DF)).days
+                days = (rec.current_nav_date - rec.date).days
                 if days > 0:
                     cagr = (rec.current_value/rec.amount)**(1/(days/365))-1
                     rec.cagr = '{:.2%}'.format(cagr)

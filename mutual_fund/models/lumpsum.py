@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
+
 from odoo import api, fields, models
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 
 
 class Lumpsum(models.Model):
@@ -15,10 +18,12 @@ class Lumpsum(models.Model):
     nav = fields.Float(string="NAV", required=True, digits=(16, 4))
     units = fields.Float(compute='compute_units', readonly=True, digits=(16, 3))
     current_nav_date = fields.Date(compute='compute_current_nav', string="Current NAV Date", readonly=True)
+    txn_days = fields.Integer(compute='compute_txn_days', string='Txn Days', readonly=True)
     current_nav = fields.Float(compute='compute_current_nav', string='Current NAV', readonly=True, digits=(16, 4))
     current_value = fields.Float(compute='compute_current_value', string='Current Value', readonly=True, digits=(16, 2))
     profit = fields.Float(compute='compute_profit', readonly=True, string='Profit/Loss', digits=(16, 2))
     percentage = fields.Char(compute='compute_profit', string='Percentage', readonly=True)
+    cagr = fields.Char(compute='compute_cagr', string='CAGR', readonly=True)
     active = fields.Boolean(default=True)
 
     @api.multi
@@ -32,6 +37,12 @@ class Lumpsum(models.Model):
             if rec.mutual_fund:
                 rec.current_nav = rec.mutual_fund.current_nav
                 rec.current_nav_date = rec.mutual_fund.date
+
+    @api.depends('date', 'current_nav_date')
+    def compute_txn_days(self):
+        for rec in self:
+            if rec.current_nav_date and rec.date:
+                rec.txn_days = (datetime.strptime(rec.current_nav_date, DF) - datetime.strptime(rec.date, DF)).days
 
     @api.depends('amount', 'nav')
     def compute_units(self):
@@ -51,3 +62,12 @@ class Lumpsum(models.Model):
             if rec.amount and rec.current_value:
                 rec.profit = rec.current_value - rec.amount
                 rec.percentage = ('%.2f' % (((rec.current_value * 100) / rec.amount) - 100)) + '%'
+
+    @api.depends('date', 'current_nav_date', 'amount', 'current_value')
+    def compute_cagr(self):
+        for rec in self:
+            if rec.amount and rec.current_value and rec.date and rec.current_nav_date:
+                days = (datetime.strptime(rec.current_nav_date, DF) - datetime.strptime(rec.date, DF)).days
+                if days > 0:
+                    cagr = (rec.current_value/rec.amount)**(1/(days/365))-1
+                    rec.cagr = '{:.2%}'.format(cagr)

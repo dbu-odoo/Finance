@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
+
 from odoo import api, fields, models
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 
 
 class SIP(models.Model):
@@ -17,6 +20,7 @@ class SIP(models.Model):
     end_date = fields.Date(string='End Date', required=True)
     total_installments = fields.Integer(string='Total Installments', required=True)
     percentage = fields.Char(compute='compute_amount', string='Percentage', readonly=True)
+    cagr = fields.Char(compute='compute_amount', string='CAGR', readonly=True)
     sip_line_ids = fields.One2many('sip.lines', 'sip_id', string="SIP Lines")
     note = fields.Text()
     active = fields.Boolean(default=True)
@@ -32,6 +36,9 @@ class SIP(models.Model):
                     rec.current_value = current_value
                     rec.profit = current_value - total_amount
                     rec.percentage = ('%.2f' % (((current_value * 100) / total_amount) - 100)) + '%'
+                    days = rec.sip_line_ids[0].txn_days
+                    if days and days > 0:
+                        rec.cagr = '{:.2%}'.format((current_value/total_amount)**(1/(float(days)/365.00))-1)
 
     @api.multi
     def fetch_latest_nav(self):
@@ -51,10 +58,12 @@ class SIPLines(models.Model):
     nav = fields.Float(string="NAV", required=True, digits=(16, 4))
     units = fields.Float(compute='compute_units', readonly=True, digits=(16, 3))
     current_nav_date = fields.Date(compute='compute_current_nav', string="Current NAV Date", readonly=True)
+    txn_days = fields.Integer(compute='compute_txn_days', string='Txn Days', readonly=True)
     current_nav = fields.Float(compute='compute_current_nav', string='Current NAV', readonly=True, digits=(16, 4))
     current_value = fields.Float(compute='compute_current_value', string='Current Value', readonly=True, digits=(16, 2))
     profit = fields.Float(compute='compute_profit', string="Profit/Loss", readonly=True, digits=(16, 2))
     percentage = fields.Char(compute='compute_profit', string='Percentage', readonly=True)
+    cagr = fields.Char(compute='compute_cagr', string='CAGR', readonly=True)
 
     def _get_line_numbers(self):
         line_num = 1    
@@ -71,6 +80,12 @@ class SIPLines(models.Model):
             if rec.mutual_fund:
                 rec.current_nav = rec.mutual_fund.current_nav
                 rec.current_nav_date = rec.mutual_fund.date
+
+    @api.depends('date', 'current_nav_date')
+    def compute_txn_days(self):
+        for rec in self:
+            if rec.current_nav_date and rec.date:
+                rec.txn_days = (datetime.strptime(rec.current_nav_date, DF) - datetime.strptime(rec.date, DF)).days
 
     @api.depends('amount', 'nav')
     def compute_units(self):
@@ -90,3 +105,12 @@ class SIPLines(models.Model):
             if rec.amount and rec.current_value:
                 rec.profit = rec.current_value - rec.amount
                 rec.percentage = ('%.2f' % (((rec.current_value * 100) / rec.amount) - 100)) + '%'
+
+    @api.depends('date', 'current_nav_date', 'amount', 'current_value')
+    def compute_cagr(self):
+        for rec in self:
+            if rec.amount > 0.00 and rec.current_value > 0.00 and rec.date and rec.current_nav_date:
+                days = (datetime.strptime(rec.current_nav_date, DF) - datetime.strptime(rec.date, DF)).days
+                if days > 0:
+                    cagr = (rec.current_value/rec.amount)**(1/(days/365))-1
+                    rec.cagr = '{:.2%}'.format(cagr)

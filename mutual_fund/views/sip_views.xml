@@ -7,13 +7,14 @@
             <tree string="SIP" decoration-danger="profit&lt;0" decoration-success="profit&gt;0">
                 <field name="name"/>
                 <field name="trading_account"/>
-                <field name="amount"/>
+                <field name="amount" sum='Total'/>
                 <field name="start_date"/>
                 <field name="end_date"/>
                 <field name="total_investment" sum='Total Invested Amount'/>
                 <field name="current_value" sum='Total Current Amount'/>
                 <field name="profit" sum='Total Profit/Loss'/>
                 <field name='percentage' avg="Percentage"/>
+                <field name='cagr' avg="CAGR"/>
             </tree>
         </field>
     </record>
@@ -47,6 +48,7 @@
                             <field name="current_value"/>
                             <field name="profit"/>
                             <field name='percentage'/>
+                            <field name='cagr'/>
                         </group>
                     </group>
                     <notebook>
@@ -60,15 +62,16 @@
                                     <field name='nav'/>
                                     <field name='current_nav'/>
                                     <field name='current_nav_date'/>
+                                    <field name='txn_days'/>
                                     <field name='current_value' sum='Total Current Amount'/>
                                     <field name='profit' sum='Total Profit'/>
                                     <field name='percentage'/>
+                                    <field name='cagr'/>
                                 </tree>
                             </field>
                         </page>
                         <page string="Note">
-                            <separator string="Note" colspan="4"/>
-                            <field name='note' nolabel="1"/>
+                            <field name='note' nolabel="1" placeholder='Note...'/>
                         </page>
                     </notebook>
                 </sheet>

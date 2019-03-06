@@ -13,9 +13,11 @@
                 <field name='nav'/>
                 <field name='current_nav'/>
                 <field name='current_nav_date'/>
+                <field name='txn_days'/>
                 <field name='current_value' sum='Total Current Amount'/>
                 <field name='profit' sum='Total Profit'/>
                 <field name='percentage' avg="Percentage"/>
+                <field name='cagr' avg="CAGR"/>
             </tree>
         </field>
     </record>
@@ -46,6 +48,7 @@
                         <group>
                             <field name="current_nav"/>
                             <field name="current_nav_date"/>
+                            <field name='txn_days'/>
                             <field name="current_value"/>
                             <field name="profit"/>
                             <field name='percentage'/>

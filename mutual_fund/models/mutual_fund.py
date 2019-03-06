@@ -16,10 +16,17 @@ class Mutualfund(models.Model):
 
     @api.model
     def fetch_latest_nav(self):
+        res = requests.get('https://www.amfiindia.com/spages/NAVAll.txt')
+        cnt = 0
+        data = {}
+        for i in [i.split(';') for i in res.text.strip().split('\n')]:
+            cnt += 1
+            if len(i) == 6 and cnt > 1:
+                data.update({
+                    str(i[0].strip()): [float(i[4].strip()) if i[4].strip() != 'N.A.' else 0.00, str(datetime.strptime(i[5].strip(), '%d-%b-%Y').strftime(DF))]
+                })
+
         for mf in self.search([]):
-            res = requests.get('https://www.amfiindia.com/spages/NAVAll.txt')
-            for i in [i.split(';') for i in res.text.strip().split('\n')]:
-                if len(i) == 6:
-                    if mf.amfi_code == i[0].strip():
-                        mf.current_nav = float(i[4].strip())
-                        mf.date = datetime.strptime(i[5].strip(), '%d-%b-%Y').strftime(DF)
+            if data.get(mf.amfi_code):
+                mf.current_nav = data.get(mf.amfi_code)[0]
+                mf.date = data.get(mf.amfi_code)[1]

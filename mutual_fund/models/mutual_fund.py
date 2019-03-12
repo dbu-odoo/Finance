@@ -17,6 +17,7 @@ class Mutualfund(models.Model):
 
     @api.model
     def fetch_latest_nav(self):
+        # http://portal.amfiindia.com/DownloadNAVHistoryReport_Po.aspx?tp=1&frmdt=01-Jan-2019&todt=06-Mar-2019
         res = requests.get('https://www.amfiindia.com/spages/NAVAll.txt')
         cnt = 0
         data = {}

@@ -58,7 +58,7 @@
                                     <field name='line_no'/>
                                     <field name='date'/>
                                     <field name='amount' sum='Total Invested Amount'/>
-                                    <field name='units'/>
+                                    <field name='units' sum='Total Units'/>
                                     <field name='nav'/>
                                     <field name='current_nav'/>
                                     <field name='current_nav_date'/>

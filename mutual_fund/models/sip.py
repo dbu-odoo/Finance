@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from datetime import date
-
 from odoo import api, fields, models
 
 
@@ -52,7 +50,7 @@ class SIP(models.Model):
                 transactions = []
                 for line in rec.sip_line_ids:
                     transactions.append((line.date, line.amount * -1.00))
-                transactions.append((date.today(), rec.current_value))
+                transactions.append((rec.name.date, rec.current_value))
                 cagr = '{:.2%}'.format(self.xirr(transactions))
                 rec.cagr = cagr
 

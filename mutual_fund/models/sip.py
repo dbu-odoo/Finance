@@ -133,11 +133,30 @@ class SIPLines(models.Model):
                 rec.profit = rec.current_value - rec.amount
                 rec.percentage = ('%.2f' % (((rec.current_value * 100) / rec.amount) - 100)) + '%'
 
+    def xirr(self, transactions):
+        years = [(ta[0] - transactions[0][0]).days / 365. for ta in transactions]
+        residual = 1.0
+        step = 0.05
+        guess = 0.05
+        epsilon = 0.0001
+        limit = 10000
+        while abs(residual) > epsilon and limit > 0:
+            limit -= 1
+            residual = 0.0
+            for i, trans in enumerate(transactions):
+                residual += trans[1] / pow(guess, years[i])
+            if abs(residual) > epsilon:
+                if residual > 0:
+                    guess += step
+                else:
+                    guess -= step
+                    step /= 2.0
+        return guess - 1
+
     @api.depends('date', 'current_nav_date', 'amount', 'current_value')
     def compute_cagr(self):
         for rec in self:
-            if rec.amount > 0.00 and rec.current_value > 0.00 and rec.date and rec.current_nav_date:
-                days = (rec.current_nav_date - rec.date).days
-                if days > 0:
-                    cagr = (rec.current_value/rec.amount)**(1/(days/365))-1
-                    rec.cagr = '{:.2%}'.format(cagr)
+            if rec.amount and rec.date and rec.current_nav_date:
+                transactions = [(rec.date, rec.amount * -1.00), (rec.current_nav_date, rec.current_value)]
+                cagr = '{:.2%}'.format(self.xirr(transactions))
+                rec.cagr = cagr

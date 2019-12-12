@@ -11,7 +11,7 @@ Mutual Fund Management
 ==========================
 Get live nav rate of funds.
     """,
-    'author': 'Deep Technologies',
+    'author': 'Deep Bundela',
     'depends': ['base_setup'],
     'data': [
         'security/ir.model.access.csv',

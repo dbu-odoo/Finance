@@ -1,87 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-	<record id="lumpsum_view_tree" model="ir.ui.view">
+    <record id="lumpsum_view_tree" model="ir.ui.view">
         <field name="name">lumpsum.lumpsum.tree</field>
         <field name="model">lumpsum.lumpsum</field>
         <field name="arch" type="xml">
             <tree string="Lumpsum" decoration-danger="profit&lt;0" decoration-success="profit&gt;0">
-                <field name='mutual_fund'/>
-                <field name="trading_account"/>
-                <field name='date'/>
-                <field name='amount' sum='Total Invested Amount'/>
-                <field name='units'/>
-                <field name='nav'/>
-                <field name='current_nav'/>
-                <field name='current_nav_date'/>
-                <field name='txn_days'/>
-                <field name='current_value' sum='Total Current Amount'/>
-                <field name='profit' sum='Total Profit'/>
-                <field name='percentage' avg="Percentage"/>
-                <field name='cagr' avg="CAGR"/>
+                <field name='mutual_fund' />
+                <field name="trading_account" />
+                <field name='date' />
+                <field name='amount' sum='Total Invested Amount' />
+                <field name='units' />
+                <field name='nav' />
+                <field name='current_nav' />
+                <field name='current_nav_date' />
+                <field name='txn_days' />
+                <field name='current_value' sum='Total Current Amount' />
+                <field name='profit' sum='Total Profit' />
+                <field name='percentage' avg="Percentage" />
+                <field name='cagr' avg="CAGR" />
             </tree>
         </field>
     </record>
-
     <record id="lumpsum_view_form" model="ir.ui.view">
         <field name="name">lumpsum.lumpsum.form</field>
         <field name="model">lumpsum.lumpsum</field>
         <field name="arch" type="xml">
             <form string="Lumpsum">
                 <header>
-                    <button name='fetch_latest_nav' type='object' string='Fetch Latest NAV' class='oe_highlight' icon='fa-rupee'/>
+                    <button name='fetch_latest_nav' type='object' string='Fetch Latest NAV' class='oe_highlight' icon='fa-rupee' />
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
-                            <field name="active" widget="boolean_button" options='{"terminology": "active"}'/>
+                            <field name="active" widget="boolean_button" options='{"terminology": "active"}' />
                         </button>
                     </div>
                     <group>
                         <group>
-                            <field name="mutual_fund"/>
-                            <field name="trading_account"/>
-                            <field name="date"/>
-                            <field name='amount'/>
-                            <field name='nav'/>
-                            <field name='units'/>
+                            <field name="mutual_fund" />
+                            <field name="trading_account" />
+                            <field name="date" />
+                            <field name='amount' />
+                            <field name='nav' />
+                            <field name='units' />
                         </group>
                         <group>
-                            <field name="current_nav"/>
-                            <field name="current_nav_date"/>
-                            <field name='txn_days'/>
-                            <field name="current_value"/>
-                            <field name="profit"/>
-                            <field name='percentage'/>
+                            <field name="current_nav" />
+                            <field name="current_nav_date" />
+                            <field name='txn_days' />
+                            <field name="current_value" />
+                            <field name="profit" />
+                            <field name='percentage' />
                         </group>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
-
     <record id="sip_view_search" model="ir.ui.view">
         <field name="name">lumpsum.lumpsum.search</field>
         <field name="model">lumpsum.lumpsum</field>
         <field name="arch" type="xml">
             <search string="Lumpsum">
-                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
-                <filter string="Inactive" name="inactive" domain="[('active', '!=', True)]"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]" />
+                <filter string="Inactive" name="inactive" domain="[('active', '!=', True)]" />
             </search>
         </field>
     </record>
-
     <record id="lumpsum_action" model="ir.actions.act_window">
         <field name="name">Lumpsum</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">lumpsum.lumpsum</field>
-        <field name="view_type">form</field>
         <field name="domain">[('user_id','=',uid)]</field>
         <field name="view_mode">tree,form</field>
     </record>
-
-    <menuitem name="Lumpsum"
-        parent="mutual_fund.menu_mutual_fund"
-        sequence="10"
-        id="submenu_lumpsum"
-        action="lumpsum_action"/>
+    <menuitem name="Lumpsum" parent="mutual_fund.menu_mutual_fund" sequence="20" id="submenu_lumpsum" action="lumpsum_action" />
 </odoo>

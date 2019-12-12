@@ -13,7 +13,8 @@ class Mutualfund(models.Model):
     name = fields.Char(required=True)
     amfi_code = fields.Char(string="AMFI Code", required=True)
     date = fields.Date(string="Date", readonly=True)
-    current_nav = fields.Float(string="Current NAV", readonly=True, digits=(16, 4))
+    current_nav = fields.Float(
+        string="Current NAV", readonly=True, digits=(16, 4))
 
     @api.model
     def fetch_latest_nav(self):

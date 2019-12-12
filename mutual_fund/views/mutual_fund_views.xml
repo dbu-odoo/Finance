@@ -5,28 +5,19 @@
         <field name="model">mutual.fund</field>
         <field name="arch" type="xml">
             <tree string="Mutual Fund" editable="bottom">
-                <field name="name"/>
-                <field name="amfi_code"/>
-                <field name="date"/>
-                <field name="current_nav"/>
+                <field name="name" />
+                <field name="amfi_code" />
+                <field name="date" />
+                <field name="current_nav" />
             </tree>
         </field>
     </record>
-
     <record id="mutual_fund_action" model="ir.actions.act_window">
         <field name="name">Mutual Fund</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">mutual.fund</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree</field>
     </record>
-
-    <menuitem name="Mutual Fund" id="menu_mutual_fund" sequence="3" web_icon='mutual_fund,static/description/icon.png'/>
-
-    <menuitem name="Mutual Fund"
-        parent="menu_mutual_fund"
-        sequence="100"
-        id="submenu_mutual_fund"
-        action="mutual_fund_action"/>
-
+    <menuitem name="Mutual Fund" id="menu_mutual_fund" sequence="3" web_icon='mutual_fund,static/description/icon.png' />
+    <menuitem name="Mutual Fund" parent="menu_mutual_fund" sequence="100" id="submenu_mutual_fund" action="mutual_fund_action" />
 </odoo>

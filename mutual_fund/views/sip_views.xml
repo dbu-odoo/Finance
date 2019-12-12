@@ -5,112 +5,90 @@
         <field name="model">sip.sip</field>
         <field name="arch" type="xml">
             <tree string="SIP" decoration-danger="profit&lt;0" decoration-success="profit&gt;0">
-                <field name="name"/>
-                <field name="trading_account"/>
-                <field name="amount" sum='Total'/>
-                <field name="start_date"/>
-                <field name="end_date"/>
-                <field name="total_investment" sum='Total Invested Amount'/>
-                <field name="current_value" sum='Total Current Amount'/>
-                <field name="profit" sum='Total Profit/Loss'/>
-                <field name='percentage' avg="Percentage"/>
-                <field name='cagr' avg="CAGR"/>
+                <field name="name" />
+                <field name="trading_account" />
+                <field name='total_installments' />
+                <field name="amount" sum='Total' />
+                <field name="total_investment" sum='Total Invested Amount' />
+                <field name="current_value" sum='Total Current Amount' />
+                <field name="profit" sum='Total Profit/Loss' />
+                <field name='percentage' avg="Percentage" />
             </tree>
         </field>
     </record>
-
     <record id="sip_view_form" model="ir.ui.view">
         <field name="name">sip.sip.form</field>
         <field name="model">sip.sip</field>
         <field name="arch" type="xml">
             <form string="SIP">
                 <header>
-                    <button name='fetch_latest_nav' type='object' string='Fetch Latest NAV' class='oe_highlight' icon='fa-rupee'/>
+                    <button name='fetch_latest_nav' type='object' string='Fetch Latest NAV' class='oe_highlight' icon='fa-rupee' />
                 </header>
                 <sheet>
-                    <div class="oe_button_box" name="button_box">
-                        <button class="oe_stat_button" type="object" name="toggle_active" icon="fa-archive">
-                            <field name="active" widget="boolean_button" options='{"terminology": "active"}'/>
-                        </button>
-                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
                     <group>
                         <group>
-                            <field name="name"/>
-                            <field name="trading_account"/>
-                            <field name="amount"/>
-                            <field name="date_of_installment"/>
-                            <field name="start_date"/>
-                            <field name="end_date"/>
+                            <field name="active" invisible="1" />
+                            <field name="name" />
+                            <field name="trading_account" />
+                            <field name="amount" />
+                            <field name="date_of_installment" />
                         </group>
                         <group>
-                            <field name="total_installments"/>
-                            <field name="total_investment"/>
-                            <field name="current_value"/>
-                            <field name="profit"/>
-                            <field name='percentage'/>
-                            <field name='cagr'/>
+                            <field name='total_installments' />
+                            <field name="total_investment" />
+                            <field name="current_value" />
+                            <field name="profit" />
+                            <field name='percentage' />
                         </group>
                     </group>
                     <notebook>
                         <page string="Installments">
                             <field name='sip_line_ids' nolabel='1'>
-                                <tree editable='bottom' decoration-danger="profit&lt;0" decoration-success="profit&gt;0">
-                                    <field name='line_no'/>
-                                    <field name='date'/>
-                                    <field name='amount' sum='Total Invested Amount'/>
-                                    <field name='units' sum='Total Units'/>
-                                    <field name='nav'/>
-                                    <field name='current_nav'/>
-                                    <field name='current_nav_date'/>
-                                    <field name='txn_days'/>
-                                    <field name='current_value' sum='Total Current Amount'/>
-                                    <field name='profit' sum='Total Profit'/>
-                                    <field name='percentage'/>
-                                    <field name='cagr'/>
+                                <tree editable='top' decoration-danger="profit&lt;0" decoration-success="profit&gt;0">
+                                    <field name='date' />
+                                    <field name='amount' sum='Total Invested Amount' />
+                                    <field name='units' sum='Total Units' />
+                                    <field name='nav' />
+                                    <field name='current_nav' />
+                                    <field name='current_nav_date' />
+                                    <field name='current_value' sum='Total Current Amount' />
+                                    <field name='profit' sum='Total Profit' />
+                                    <field name='percentage' />
                                 </tree>
                             </field>
                         </page>
                         <page string="Note">
-                            <field name='note' nolabel="1" placeholder='Note...'/>
+                            <field name='note' nolabel="1" placeholder='Note...' />
                         </page>
                     </notebook>
                 </sheet>
             </form>
         </field>
     </record>
-
     <record id="sip_view_search" model="ir.ui.view">
         <field name="name">sip.sip.search</field>
         <field name="model">sip.sip</field>
         <field name="arch" type="xml">
             <search string="SIP">
-                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
-                <filter string="Inactive" name="inactive" domain="[('active', '!=', True)]"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]" />
+                <filter string="Inactive" name="inactive" domain="[('active', '!=', True)]" />
             </search>
         </field>
     </record>
-
     <record id="sip_action" model="ir.actions.act_window">
         <field name="name">SIP</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">sip.sip</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('user_id','=',uid)]</field>
     </record>
-
     <record id="sip_lines_action" model="ir.actions.act_window">
         <field name="name">SIP Lines</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">sip.lines</field>
-        <field name="view_type">tree</field>
         <field name="view_mode">tree</field>
         <field name="domain">[('user_id','=',uid)]</field>
     </record>
-
-    <menuitem name="SIP"
-        parent="mutual_fund.menu_mutual_fund"
-        sequence="20"
-        id="submenu_sip"
-        action="sip_action"/>
+    <menuitem name="SIP" parent="mutual_fund.menu_mutual_fund" sequence="10" id="submenu_sip" action="sip_action" />
 </odoo>
